@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Menu Waroeng Boto</title>
+  <style>
+    body {
+      font-family: 'Comic Neue', cursive, Arial, sans-serif;
+      background-image: url('https://i.pinimg.com/736x/a4/9f/3f/a49f3fbf810eac817a66299be798a1bd.jpg');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      color: #333;
+      padding: 20px;
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      max-width: 700px;
+      width: 100%;
+      background-color: rgba(255, 255, 255, 0.9);
+      padding: 20px 30px 40px 30px;
+      border-radius: 16px;
+      box-shadow: 0 0 15px rgba(104, 8, 79, 0.904);
+      position: relative;
+      box-sizing: border-box;
+    }
+
+    h1, h2, h3 {
+      color: #c249a2;
+      text-align: center;
+      margin-bottom: 12px;
+    }
+
+    p, ul {
+      text-align: center;
+      font-size: 1.1rem;
+      line-height: 1.5;
+      margin-bottom: 20px;
+      color: #444;
+    }
+
+    ul {
+      list-style-type: none;
+      padding-left: 0;
+    }
+
+    ul li {
+      padding: 5px 0;
+    }
+
+    .section {
+      display: none;
+      margin-bottom: 30px;
+    }
+
+    .section.active {
+      display: block;
+    }
+
+    .nav-buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 10px;
+    }
+
+    button {
+      background-color: #f29be5;
+      border: none;
+      padding: 10px 18px;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background-color 0.3s ease;
+      box-sizing: border-box;
+    }
+
+    button:hover {
+      background-color: #ac3775;
+    }
+
+    .button-container {
+      display: flex;
+      justify-content: center;
+      gap: 18px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+
+    .button-container button {
+      font-size: 1.8rem;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      padding: 0;
+      line-height: 1;
+      user-select: none;
+    }
+
+    .centered-button {
+      display: block;
+      margin: 0 auto 15px auto;
+      max-width: 220px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .menu-category {
+      background-color: #ebc1e2;
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+
+    .menu-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px dashed #712769;
+    }
+
+    .menu-item:last-child {
+      border-bottom: none;
+    }
+
+    .item-name {
+      font-weight: bold;
+      color: #8b0f74;
+    }
+
+    .item-price {
+      color: #750f7e;
+      font-weight: bold;
+    }
+
+    .item-desc {
+      font-size: 0.9rem;
+      color: #666;
+      margin-top: 5px;
+    }
+
+    /* Animasi pulse untuk emot */
+    @keyframes pulse {
+      0%, 100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.2);
+      }
+    }
+
+    .emoji-anim {
+      display: inline-block;
+      animation: pulse 2s infinite;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 480px) {
+      .container {
+        padding: 15px 20px 30px 20px;
+      }
+      button {
+        font-size: 0.9rem;
+        padding: 8px 14px;
+      }
+      h1, h2, h3 {
+        font-size: 1.3rem;
+      }
+      .nav-buttons {
+        flex-direction: column;
+        gap: 8px;
+      }
+      .nav-buttons button {
+        width: 100%;
+      }
+      .button-container {
+        gap: 12px;
+      }
+    }
+    
+    /* New opening slide styles */
+    .opening-slide {
+      text-align: center;
+    }
+    .opening-slide h1 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+    }
+    .opening-slide p {
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+    }
+    .opening-image {
+      max-width: 100%;
+      height: auto;
+      border-radius: 10px;
+      margin: 20px 0;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+/* Ukuran font default (desktop) */
+body {
+  font-size: 16px;
+}
+
+/* Untuk tablet */
+@media (max-width: 768px) {
+  body {
+    font-size: 15px;
+  }
+}
+
+/* Untuk smartphone */
+@media (max-width: 480px) {
+  body {
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+  }
+  
+  h1 {
+    font-size: 1.5rem !important;
+  }
+  
+  h2, h3 {
+    font-size: 1.3rem !important;
+  }
+  
+  p, li, .item-name, .item-price {
+    font-size: 0.8rem !important;
+  }
+  
+  .item-desc {
+    font-size: 0.7rem !important;
+  }
+}
+
+/* Untuk smartphone kecil (opsional) */
+@media (max-width: 320px) {
+  body {
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+  }
+}
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <!-- New Slide 1 - Opening -->
+<div class="section active" id="slide-1">
+  <div class="opening-slide">
+    <h1><span class="emoji-anim">🦀🦞🦐🐚</span><br>Selamat Datang <br> di Waroeng Boto</h1>
+    <p>Seafood Segar dengan Cita Rasa Nusantara</p>
+    <img src="https://i.pinimg.com/736x/e6/85/25/e68525755ccd8f77d260b33ff55d4769.jpg" 
+         alt="Waroeng Boto" 
+         class="opening-image"
+         style="max-height: 300px; object-fit: cover;">
+    <p>Ayo datang ke Waroeng Boto dan rasakan kenikmatan setiap menunya!</p>
+    <div class="nav-buttons" style="justify-content: center;">
+      <button onclick="changeSlide(1)">Lihat Menu →</button>
+    </div>
+  </div>
+</div>
+
+    <!-- Slide 2 - Makanan -->
+    <div class="section" id="slide-2">
+      <h1><span class="emoji-anim">🍽️</span><br>Menu Makanan</h1>
+      
+      <!-- Kategori: Aku Seafood -->
+      <div class="menu-category">
+        <h3>Aku Seafood</h3>
+
+        <div class="menu-item">
+          <div><div class="item-name">Seafood Single</div></div>
+          <div class="item-price">Rp 50.000</div>
+        </div>
+
+        <div class="menu-item">
+          <div><div class="item-name">Seafood Double</div></div>
+          <div class="item-price">Rp 100.000</div>
+        </div>
+
+        <div class="menu-item">
+          <div><div class="item-name">Seafood Rame</div></div>
+          <div class="item-price">Rp 150.000</div>
+        </div>
+
+        <div class="menu-item">
+          <div><div class="item-name">Udang Saos</div></div>
+          <div class="item-price">Rp 30.000</div>
+        </div>
+
+        <div class="menu-item">
+          <div><div class="item-name">Cumi Saos</div></div>
+          <div class="item-price">Rp 30.000</div>
+        </div>
+
+        <div class="menu-item">
+          <div><div class="item-name">Nasi Goreng Seafood</div></div>
+          <div class="item-price">Rp 20.000</div>
+        </div>
+
+        <div class="menu-item">
+          <div><div class="item-name">Cah Kangkung Seafood</div></div>
+          <div class="item-price">Rp 15.000</div>
+        </div>
+      </div>
+
+      <!-- Kategori: Aku Bukan Seafood -->
+      <div class="menu-category">
+        <h3>Aku Bukan Seafood</h3>
+
+        <div class="menu-item">
+          <div><div class="item-name">Cah Kangkung Biasa</div></div>
+          <div class="item-price">Rp 10.000</div>
+        </div>
+
+        <div class="menu-item">
+          <div><div class="item-name">Nasi Goreng Biasa</div></div>
+          <div class="item-price">Rp 15.000</div>
+        </div>
+
+        <div class="menu-item">
+          <div><div class="item-name">Bebek Goreng/Bakar</div></div>
+          <div class="item-price">Rp 35.000</div>
+        </div>
+
+        <div class="menu-item">
+          <div><div class="item-name">Ayam Kampung Bakar/Goreng</div></div>
+          <div class="item-price">Rp 25.000</div>
+        </div>
+
+        <div class="menu-item">
+          <div><div class="item-name">Ayam Biasa Bakar/Goreng</div></div>
+          <div class="item-price">Rp 20.000</div>
+        </div>
+
+        <div class="menu-item">
+          <div><div class="item-name">Nila Bakar</div></div>
+          <div class="item-price">Rp 25.000</div>
+        </div>
+
+        <div class="menu-item">
+          <div><div class="item-name">Nila Saos</div></div>
+          <div class="item-price">Rp 25.000</div>
+        </div>
+
+        <div class="menu-item">
+          <div><div class="item-name">Lele Bakar/Goreng</div></div>
+          <div class="item-price">Rp 20.000</div>
+        </div>
+      </div>
+
+      <div class="nav-buttons">
+        <button onclick="changeSlide(-1)">Prev</button>
+        <button onclick="changeSlide(1)">Next</button>
+      </div>
+    </div>
+
+    <!-- Slide 3 - Minuman -->
+<div class="section" id="slide-3">
+  <h1><span class="emoji-anim">🥤🍟</span><br>Menu Minuman & Cemilan</h1>
+
+  <div class="menu-category">
+    <h3>Minuman</h3>
+    <div class="menu-item">
+      <div>
+        <div class="item-name">Panas/Es Teh</div>
+        <div class="item-desc">Teh dingin manis segar</div>
+      </div>
+      <div class="item-price">Rp 5.000</div>
+    </div>
+    <div class="menu-item">
+      <div>
+        <div class="item-name">Hangat/Es Jeruk</div>
+        <div class="item-desc">Jeruk peras segar</div>
+      </div>
+      <div class="item-price">Rp 5.000</div>
+    </div>
+    <div class="menu-item">
+      <div>
+        <div class="item-name">Aneka Jus</div>
+        <div class="item-desc">Pilihan: Alpukat, Mangga, Naga, dll</div>
+      </div>
+      <div class="item-price">Rp 10.000</div>
+    </div>
+  </div>
+
+  <div class="menu-category">
+    <h3>Cemilan</h3>
+    <div class="menu-item">
+      <div>
+        <div class="item-name">Sosis</div>
+        <div class="item-desc">Crispy dan gurih</div>
+      </div>
+      <div class="item-price">Rp 10.000</div>
+    </div>
+    <div class="menu-item">
+      <div>
+        <div class="item-name">Kentang Goreng</div>
+        <div class="item-desc">Crispy dan gurih</div>
+      </div>
+      <div class="item-price">Rp 10.000</div>
+    </div>
+    <div class="menu-item">
+      <div>
+        <div class="item-name">Nugget</div>
+        <div class="item-desc">Crispy dan gurih</div>
+      </div>
+      <div class="item-price">Rp 10.000</div>
+    </div>
+    <div class="menu-item">
+      <div>
+        <div class="item-name">Seblak</div>
+        <div class="item-desc">Toping mulai dari 1.000an</div>
+      </div>
+      <div class="item-price">-</div>
+    </div>
+  </div>
+
+  <div class="nav-buttons">
+    <button onclick="changeSlide(-1)">Prev</button>
+    <button onclick="changeSlide(1)">Next</button>
+  </div>
+</div>
+
+    <!-- Slide 4 - Paket (originally slide 4, now renumbered) -->
+    <div class="section" id="slide-4">
+      <h1><span class="emoji-anim">🎁</span><br>Menu Spesial</h1>
+      
+      <div class="menu-category">
+        <h3>Paket Keluarga</h3>
+        <div class="menu-item">
+          <div>
+            <div class="item-name">Paket A (4 orang)</div>
+            <div class="item-desc">4 Nasi Goreng + 4 Es Teh</div>
+          </div>
+          <div class="item-price">Rp 100.000</div>
+        </div>
+        <div class="menu-item">
+          <div>
+            <div class="item-name">Paket B (2 orang)</div>
+            <div class="item-desc">2 Nasi Goreng + 2 Es Teh</div>
+          </div>
+          <div class="item-price">Rp 50.000</div>
+        </div>
+      </div>
+      
+      <div class="menu-category">
+        <h3>Paket Tumpeng</h3>
+        <div class="menu-item">
+          <div>
+            <div class="item-name">Tumpeng</div>
+            <div class="item-desc">Lengkap </div>
+          </div>
+          <div class="item-price">Rp 500.000</div>
+        </div>
+      </div>
+      
+      <div class="nav-buttons">
+        <button onclick="changeSlide(-1)">Prev</button>
+        <button onclick="changeSlide(1)">Next</button>
+      </div>
+    </div>
+
+    <!-- Slide 5 - Info (originally slide 5, now renumbered) -->
+    <div class="section" id="slide-5">
+      <h1><span class="emoji-anim">ℹ️</span><br>Informasi Waroeng Boto</h1>
+      
+      <div class="menu-category">
+        <h3>Jam Operasional</h3>
+        <p>Senin - Minggu: 10.00 - 22.00 WIB</p>
+      </div>
+      
+      <div class="menu-category">
+        <h3>Lokasi</h3>
+        <p>Pamenang, Kec. Pamenang,<br>
+        Kabupaten Merangin, Jambi</p>
+        <button class="centered-button" onclick="window.open('https://maps.app.goo.gl/PTJ1V6RdFgZAdXD48')">Lihat di Google Maps</button>
+      </div>
+      
+      <div class="menu-category">
+        <h3>Kontak</h3>
+        <p>Telepon: +62 852-2386-0162</p>
+        <p>WhatsApp: +62 852-2386-0162</p>
+        <p>Instagram: @waroeng.boto</p>
+        <p>Facebook: waroeng boto</p>
+        <p>Tiktok: @waroeng.boto</p>
+      </div>
+      
+      <div class="nav-buttons">
+        <button onclick="changeSlide(-1)">Prev</button>
+      </div>
+    </div>
+
+    <div class="button-container">
+      <button class="button" onclick="changeToSlide(1)">🏠</button>
+      <button class="button" onclick="changeToSlide(2)">🍽️</button>
+      <button class="button" onclick="changeToSlide(3)">🥤</button>
+      <button class="button" onclick="changeToSlide(4)">🎁</button>
+      <button class="button" onclick="changeToSlide(5)">ℹ️</button>
+    </div>
+
+  </div>
+
+  <script>
+    let currentSlide = 1;
+    const totalSlides = 5;
+
+    function showSlide(n) {
+      if (n < 1) n = 1;
+      if (n > totalSlides) n = totalSlides;
+      currentSlide = n;
+      document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+      document.getElementById('slide-' + n).classList.add('active');
+    }
+
+    function changeSlide(n) {
+      showSlide(currentSlide + n);
+    }
+
+    function changeToSlide(n) {
+      showSlide(n);
+    }
+
+    showSlide(currentSlide);
+  </script>
+</body>
+</html>
